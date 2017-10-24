@@ -2,7 +2,6 @@
 import csv
 import re
 
-
 tags = {}
 with open('seed.csv', 'rb') as csvfile:
 	reader = csv.reader(csvfile, delimiter ='\t')
@@ -60,6 +59,7 @@ for index in opponents:
 		conflicts.append(tempString)
 
 
+
 f = open('seeded.txt', 'w')
 for player in final:
 	f.write(player[1] + '\n')  # python will convert \n to os.linesep
@@ -70,5 +70,4 @@ f = open('conflicts.txt', 'w')
 for conflict in conflicts:
 	f.write(conflict + '\n')
 f.close()
-
 
