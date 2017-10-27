@@ -1,14 +1,15 @@
-CoinSeederv0.1
+CoinSeederV0.2
 
-This is NOT a replacement for seeding a tournament, only a tool to help seed. 
-
-ONLY WORKS ON WINDOWS
+Instructions:
 
 1) Make sure "seed.csv" is in the same folder as seeding.exe
 - The first row in the csv MUST be the tag
 
 2) Make sure "players.txt" is in the same folder as seeding.exe
 - The format should be one player per line 
+
+3) Make sure that "backlog.bcn" is in the same folder as seeding.exe
+- You must get this from Coin, you cannot reproduce your own
 
 Ex:
 Kuyashi
@@ -18,12 +19,15 @@ Mars
 ...
 Etc
 
-3) Click seeding.exe
+3) Click seeding.exe (or python seeding.py if you are on Linux/Mac OS)
 
 4) "seeded.txt" will be the seeded playerlist according to the version of the CSV (which is just a downloaded version of the full Coin Rank)
 
+5) "conflicts.txt" will show matches played in WR1 and WR2 that have been played in the past two weeks
 
-Names of the files must be "seed.csv" and "players.txt".
+------ NOTES -----
+
+Names of the files must be "seed.csv", "players.txt", and "backlog.bcn".
 
 New players or altered tags will automatically be pushed to the bottom of the list.
 
