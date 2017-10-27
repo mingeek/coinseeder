@@ -3,6 +3,10 @@ import re
 import datetime as dt
 from xml.dom import minidom
 
+#Normalizes the tag, removing special characters and white space+
+def normalize(tag):
+	return re.sub("[\(\[].*?[\)\]]", "", tag.replace(" ", ""))
+
 #Takes the name of a CSV file and returns a dictionary of tags	
 def setTags(stats_sheet):
 	tags_list = {}
@@ -14,7 +18,7 @@ def setTags(stats_sheet):
 				continue
 			tag = row[0].split(',')[0]
 			region = row[0].split(',')[3]
-			tag = re.sub("[\(\[].*?[\)\]]", "", tag.replace(" ", ""))
+			tag = normalize(tag)
 			tags_list[tag.lower()] = (rank,region)
 			rank += 1
 	return tags_list
@@ -22,7 +26,7 @@ def setTags(stats_sheet):
 #Takes a dictionary of tags and returns a seeded list of players
 def setOrder(tags_list):
 	with open('players.txt') as f:
-	    attendees = [re.sub("[\(\[].*?[\)\]] ", "", x.strip('\n')) for x in f.readlines()]
+	    attendees = [normalize(x.strip('\n')) for x in f.readlines()]
 
 	seeds = []
 	for attendee in attendees:
@@ -44,8 +48,8 @@ def findPrevMatches(num_days):
 		date1 = dt.datetime.strptime(i.attributes['Timestamp'].value.split()[0], "%m/%d/%Y")
 
 		if date1 > last_week:
-			p1_tag = re.sub("[\(\[].*?[\)\]]", "", str(i.attributes['Player1'].value).replace(" ", ""))
-			p2_tag = re.sub("[\(\[].*?[\)\]]", "", str(i.attributes['Player2'].value).replace(" ", ""))
+			p1_tag = normalize(str(i.attributes['Player1'].value))
+			p2_tag = normalize(str(i.attributes['Player2'].value))
 			played_matches.append((p1_tag, p2_tag))
 	return played_matches
 
@@ -77,8 +81,8 @@ def findConflicts(seeds, num_days):
 	for index in opponents:
 		player1 = seeds[index-1][1]
 		player2 = seeds[opponents[index] - 1][1]
-		p1_tag = re.sub("[\(\[].*?[\)\]]", "", str(player1).replace(" ", ""))
-		p2_tag = re.sub("[\(\[].*?[\)\]]", "", str(player2).replace(" ", ""))
+		p1_tag = normalize(str(player1))
+		p2_tag = normalize(str(player2))
 		region1 = seeds[index-1][2]
 		region2 = seeds[opponents[index] - 1][2]
 
